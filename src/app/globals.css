@@ -25,3 +25,16 @@ body {
     text-wrap: balance;
   }
 }
+
+@keyframes translate {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(var(--translateX), var(--translateY));
+  }
+}
+
+.animate-translate {
+  animation: translate 20s linear forwards;
+}

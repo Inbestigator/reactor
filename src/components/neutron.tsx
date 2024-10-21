@@ -1,56 +1,47 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export function Neutron({
-  currentCoords,
-  setCoords,
+  startCoords,
+  angle,
   kill,
+  type,
 }: {
-  currentCoords: { x: number; y: number };
-  setCoords: (coords: { x: number; y: number }) => void;
+  startCoords: { x: number; y: number };
+  angle: number;
   kill: () => void;
+  type: "fast" | "thermal";
 }) {
-  const [angle] = useState(Math.random() * 360);
-  const speed = 5;
+  const distance = 5000;
+
+  const translateX = distance * Math.cos(angle);
+  const translateY = distance * Math.sin(angle);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    const timeout = setTimeout(() => {
+      kill();
+    }, 5000);
 
-    const { innerWidth, innerHeight } = window;
-
-    const interval = setInterval(() => {
-      setCoords(
-        (() => {
-          const newX =
-            currentCoords.x + Math.cos((angle * Math.PI) / 180) * speed;
-          const newY =
-            currentCoords.y + Math.sin((angle * Math.PI) / 180) * speed;
-
-          const distanceX = Math.abs(newX - innerWidth / 2);
-          const distanceY = Math.abs(newY - innerHeight / 2);
-
-          if (distanceX > 800 || distanceY > 500) {
-            kill();
-          }
-
-          return { x: newX, y: newY };
-        })()
-      );
-    }, 30);
-
-    return () => clearInterval(interval);
-  }, [currentCoords.x, currentCoords.y, angle, speed, kill, setCoords]);
+    return () => clearTimeout(timeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div
-      className="aspect-square rounded-full bg-slate-700 size-3 p-1 absolute"
-      style={{
-        top: currentCoords.y,
-        left: currentCoords.x,
-      }}
+      className="aspect-square rounded-full bg-slate-700 size-3 p-[0.16rem] absolute animate-translate"
+      style={
+        {
+          top: startCoords.y,
+          left: startCoords.x,
+          "--translateX": `${translateX}px`,
+          "--translateY": `${translateY}px`,
+        } as React.CSSProperties
+      }
     >
-      <div className="aspect-square rounded-full bg-white" />
+      {type === "fast" && (
+        <div className="aspect-square rounded-full bg-white" />
+      )}
     </div>
   );
 }

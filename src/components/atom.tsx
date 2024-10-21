@@ -26,56 +26,103 @@ export function Atom({
   neutrons: Record<string, Neutron>;
   setNeutrons: Dispatch<SetStateAction<Record<string, Neutron>>>;
 }) {
-  const [element] = useState<"U" | "?" | "Xe">("U");
+  const [element, setElement] = useState<"U" | "?" | "Xe">("?");
   const [water, setWater] = useState(0);
   const atomRef = useRef<HTMLDivElement>(null);
-  const [prevTest, setPrevTest] = useState(0);
 
   useEffect(() => {
-    if (atomRef.current && Date.now() - prevTest > 250) {
-      const rect = atomRef.current.getBoundingClientRect();
-
-      const neutronsInAtom = Object.values(neutrons).filter((neutron) => {
-        const neutronRect = {
-          left: neutron.currentCoords.x,
-          top: neutron.currentCoords.y,
-          right: neutron.currentCoords.x + 10,
-          bottom: neutron.currentCoords.y + 10,
-        };
-        return (
-          neutronRect.left < rect.right &&
-          neutronRect.right > rect.left &&
-          neutronRect.top < rect.bottom &&
-          neutronRect.bottom > rect.top
-        );
-      });
-
-      if (neutronsInAtom.length > 0) {
-        setWater((prev) => Math.min(prev + 15 * neutronsInAtom.length));
-      } else {
-        setWater((prev) => Math.max(prev - 10, 0));
-      }
-
-      setPrevTest(Date.now());
-    }
-  }, [neutrons, prevTest]);
-
-  useEffect(() => {
-    if (atomRef.current && Math.random() > 0.99) {
-      const rect = atomRef.current.getBoundingClientRect();
+    function spawnNeutron(rect: DOMRect) {
       setNeutrons((prev) => ({
         ...prev,
         [crypto.randomUUID()]: {
-          currentCoords: {
+          startCoords: {
             x: rect.left + window.scrollX,
             y: rect.top + window.scrollY,
           },
-          destroyed: false,
+          angle: Math.random() * Math.PI * 2,
+          createdAt: Date.now(),
+          type: "thermal",
         },
       }));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const interval = setInterval(() => {
+      if (atomRef.current) {
+        const rect = atomRef.current.getBoundingClientRect();
+        let hit = false;
+
+        const neutronsInAtom = Object.entries(neutrons).filter(
+          ([k, neutron]) => {
+            const pos = calculateNeutronPosition();
+
+            function calculateNeutronPosition() {
+              const timeElapsed = (Date.now() - neutron.createdAt) / 1000;
+              const velocity = 5000 / 20;
+              const distanceMoved = velocity * timeElapsed;
+              const posX =
+                Math.cos(neutron.angle) * distanceMoved + neutron.startCoords.x;
+              const posY =
+                Math.sin(neutron.angle) * distanceMoved + neutron.startCoords.y;
+              return { x: posX, y: posY };
+            }
+
+            const neutronRect = {
+              left: pos.x,
+              top: pos.y,
+              right: pos.x + 12,
+              bottom: pos.y + 12,
+            };
+
+            const amIHit =
+              neutronRect.left < rect.right &&
+              neutronRect.right > rect.left &&
+              neutronRect.top < rect.bottom &&
+              neutronRect.bottom > rect.top;
+
+            if (neutron.type === "thermal" && amIHit && element !== "?") {
+              hit = true;
+              setNeutrons((prev) => {
+                const newNeutrons = { ...prev };
+                delete newNeutrons[k];
+                return newNeutrons;
+              });
+            }
+
+            return amIHit;
+          }
+        );
+
+        if (hit && element !== "?") {
+          switch (element) {
+            case "U":
+              const rect = atomRef.current.getBoundingClientRect();
+              setElement(Math.random() > 0.95 ? "Xe" : "?");
+              spawnNeutron(rect);
+              spawnNeutron(rect);
+              break;
+            case "Xe":
+              setElement("?");
+              break;
+          }
+        } else if (element === "?" && Math.random() > 0.999) {
+          setElement("U");
+          if (Math.random() > 0.95) {
+            const rect = atomRef.current.getBoundingClientRect();
+            spawnNeutron(rect);
+          }
+        }
+
+        if (neutronsInAtom.length > 0) {
+          setWater((prev) => Math.min(prev + 2 * neutronsInAtom.length));
+        } else {
+          setWater((prev) => Math.max(prev - 1, 0));
+        }
+      }
+    }, 15);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [element, neutrons, setNeutrons]);
 
   return (
     <div
@@ -88,7 +135,9 @@ export function Atom({
         ref={atomRef}
         className={cn(
           "aspect-square rounded-full z-10",
-          element === "U" && "bg-blue-500"
+          element === "U" && "bg-blue-500",
+          element === "Xe" && "bg-slate-700",
+          element === "?" && "bg-slate-400"
         )}
       />
     </div>
