@@ -112,8 +112,8 @@ export function Atom({
         }
 
         if (neutronsInAtom.length > 0) {
-          setWater((prev) => Math.min(prev + 2 * neutronsInAtom.length));
-        } else {
+          setWater((prev) => Math.min(prev + 3 * neutronsInAtom.length));
+        } else if (Math.random() > 0.45) {
           setWater((prev) => Math.max(prev - 1, 0));
         }
       }
