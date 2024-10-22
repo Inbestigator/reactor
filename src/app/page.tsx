@@ -26,7 +26,7 @@ export default function Main() {
         {new Array(840).fill(0).map((_, i) => (
           <Atom neutrons={neutrons} setNeutrons={setNeutrons} key={i} />
         ))}
-        <div className="absolute inset-0 flex items-start justify-between">
+        <div className="absolute inset-0 flex items-start justify-between overflow-hidden">
           {new Array(21)
             .fill(0)
             .map((_, i) =>
