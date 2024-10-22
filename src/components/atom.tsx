@@ -41,7 +41,7 @@ export function Atom({
           },
           angle: Math.random() * Math.PI * 2,
           createdAt: Date.now(),
-          type: "thermal",
+          type: "fast",
         },
       }));
     }

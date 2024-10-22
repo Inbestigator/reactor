@@ -1,6 +1,7 @@
 "use client";
 
 import { Atom } from "@/components/atom";
+import { Moderator } from "@/components/moderator";
 import { Neutron } from "@/components/neutron";
 import { useState } from "react";
 
@@ -19,10 +20,15 @@ export default function Main() {
       <h1 className="text-3xl font-bold text-black">
         Neutrons: {Object.keys(neutrons).length}
       </h1>
-      <div className="grid grid-cols-[repeat(40,minmax(0,1fr))] grid-rows-[repeat(21,minmax(0,1fr))] gap-1">
+      <div className="grid grid-cols-[repeat(40,minmax(0,1fr))] grid-rows-[repeat(21,minmax(0,1fr))] gap-1 relative">
         {new Array(840).fill(0).map((_, i) => (
           <Atom neutrons={neutrons} setNeutrons={setNeutrons} key={i} />
         ))}
+        <div className="absolute inset-0 flex items-center justify-between">
+          {new Array(11).fill(0).map((_, i) => (
+            <Moderator neutrons={neutrons} setNeutrons={setNeutrons} key={i} />
+          ))}
+        </div>
       </div>
       {Object.entries(neutrons).map(([k, v]) => (
         <Neutron
