@@ -1,6 +1,7 @@
 "use client";
 
 import { Atom } from "@/components/atom";
+import { Control } from "@/components/control";
 import { Moderator } from "@/components/moderator";
 import { Neutron } from "@/components/neutron";
 import { useState } from "react";
@@ -14,6 +15,7 @@ export interface Neutron {
 
 export default function Main() {
   const [neutrons, setNeutrons] = useState<Record<string, Neutron>>({});
+  const [raised, setRaised] = useState(0);
 
   return (
     <main className="bg-slate-50 h-dvh w-screen flex flex-col items-center justify-center">
@@ -24,10 +26,25 @@ export default function Main() {
         {new Array(840).fill(0).map((_, i) => (
           <Atom neutrons={neutrons} setNeutrons={setNeutrons} key={i} />
         ))}
-        <div className="absolute inset-0 flex items-center justify-between">
-          {new Array(11).fill(0).map((_, i) => (
-            <Moderator neutrons={neutrons} setNeutrons={setNeutrons} key={i} />
-          ))}
+        <div className="absolute inset-0 flex items-start justify-between">
+          {new Array(21)
+            .fill(0)
+            .map((_, i) =>
+              i % 2 ? (
+                <Control
+                  neutrons={neutrons}
+                  setNeutrons={setNeutrons}
+                  raised={raised}
+                  key={i}
+                />
+              ) : (
+                <Moderator
+                  neutrons={neutrons}
+                  setNeutrons={setNeutrons}
+                  key={i}
+                />
+              )
+            )}
         </div>
       </div>
       {Object.entries(neutrons).map(([k, v]) => (
@@ -73,6 +90,13 @@ export default function Main() {
           Fast Neutron
         </div>
       </div>
+      <input
+        type="range"
+        min="0"
+        max="100"
+        value={raised}
+        onChange={(e) => setRaised(Number(e.target.value))}
+      />
     </main>
   );
 }
