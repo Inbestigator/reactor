@@ -29,13 +29,14 @@ export function Neutron({
 
   return (
     <div
-      className="aspect-square rounded-full bg-slate-700 size-3 p-0.5 absolute animate-translate"
+      className="aspect-square rounded-full bg-slate-700 size-3 p-0.5 absolute animate-neutron"
       style={
         {
           top: startCoords.y,
           left: startCoords.x,
           "--translateX": `${translateX}px`,
           "--translateY": `${translateY}px`,
+          "--speed": (type === "fast" ? 20 : 40) + "s",
         } as React.CSSProperties
       }
     >

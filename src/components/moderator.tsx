@@ -22,7 +22,7 @@ export function Moderator({
 
           function calculateNeutronPosition() {
             const timeElapsed = (Date.now() - neutron.createdAt) / 1000;
-            const velocity = 5000 / 20;
+            const velocity = 5000 / (neutron.type === "fast" ? 20 : 40);
             const distanceMoved = velocity * timeElapsed;
             const posX =
               Math.cos(neutron.angle) * distanceMoved + neutron.startCoords.x;
@@ -74,7 +74,7 @@ export function Moderator({
           return amIHit;
         });
       }
-    }, 15);
+    }, 10);
 
     return () => {
       clearInterval(interval);

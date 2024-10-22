@@ -25,7 +25,7 @@ export function Control({
 
           function calculateNeutronPosition() {
             const timeElapsed = (Date.now() - neutron.createdAt) / 1000;
-            const velocity = 5000 / 20;
+            const velocity = 5000 / (neutron.type === "fast" ? 20 : 40);
             const distanceMoved = velocity * timeElapsed;
             const posX =
               Math.cos(neutron.angle) * distanceMoved + neutron.startCoords.x;
@@ -58,7 +58,7 @@ export function Control({
           return amIHit;
         });
       }
-    }, 15);
+    }, 10);
 
     return () => {
       clearInterval(interval);
@@ -68,11 +68,11 @@ export function Control({
   return (
     <div
       ref={modRef}
-      className="bg-slate-700 w-2.5 transition-all duration-[5000ms] ease-in-out relative"
+      className="bg-slate-700 w-2.5 transition-[height] duration-[5000ms] ease-in-out relative"
       style={{ height: 100 - raised + "%" }}
     >
       <div className="bg-slate-700 w-0.5 h-32 absolute top-full left-1/2 -translate-x-1/2" />
-      <div className="absolute top-full mt-32 h-44 left-1/2 -translate-x-1/2">
+      <div className="absolute top-full mt-32 h-80 left-1/2 -translate-x-1/2">
         <Moderator neutrons={neutrons} setNeutrons={setNeutrons} />
       </div>
     </div>
