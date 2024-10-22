@@ -67,7 +67,10 @@ export function AtomGroup({
   }, [neutrons]);
 
   return (
-    <div ref={groupRef} className="grid grid-cols-4 grid-rows-3 gap-1">
+    <div
+      ref={groupRef}
+      className="grid grid-cols-4 grid-rows-3 gap-0 lg:gap-0.5 xl:gap-1"
+    >
       {new Array(12).fill(0).map((_, i) => (
         <Atom key={i} enterers={enterers} setNeutrons={setNeutrons} />
       ))}
@@ -177,7 +180,7 @@ export function Atom({
 
   return (
     <div
-      className="aspect-square size-8 p-1 transition-all"
+      className="aspect-square size-6 p-1 transition-all xl:size-8"
       style={{
         backgroundColor: blendWater(water),
       }}
