@@ -2,6 +2,7 @@
 
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { type Neutron } from "@/app/page";
+import { Moderator } from "./moderator";
 
 export function Control({
   neutrons,
@@ -67,8 +68,13 @@ export function Control({
   return (
     <div
       ref={modRef}
-      className="bg-slate-700 w-2.5 transition-all duration-[5000ms] ease-in-out"
+      className="bg-slate-700 w-2.5 transition-all duration-[5000ms] ease-in-out relative"
       style={{ height: 100 - raised + "%" }}
-    />
+    >
+      <div className="bg-slate-700 w-0.5 h-32 absolute top-full left-1/2 -translate-x-1/2" />
+      <div className="absolute top-full mt-32 h-44 left-1/2 -translate-x-1/2">
+        <Moderator neutrons={neutrons} setNeutrons={setNeutrons} />
+      </div>
+    </div>
   );
 }
