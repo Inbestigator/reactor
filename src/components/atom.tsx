@@ -156,7 +156,7 @@ export function Atom({
           }
           break;
         case "U":
-          if (Math.random() > 0.9 || (water >= 100 && Math.random() > 0.7)) {
+          if (Math.random() > 0.995 || (water >= 100 && Math.random() > 0.9)) {
             setElement("?");
             spawnNeutron(rect);
           }
