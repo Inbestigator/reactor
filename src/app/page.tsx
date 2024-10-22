@@ -57,6 +57,10 @@ export default function Main() {
           Non-Uranium
         </div>
         <div className="text-xl font-bold text-black flex items-center">
+          <div className="aspect-square rounded-full bg-slate-700 size-3 p-0.5 inline-block mr-2" />
+          Thermal Neutron
+        </div>
+        <div className="text-xl font-bold text-black flex items-center">
           <div className="aspect-square rounded-full bg-slate-700 size-3 p-0.5 inline-block mr-2">
             <div className="aspect-square rounded-full bg-white" />
           </div>
