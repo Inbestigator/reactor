@@ -29,7 +29,7 @@ export function Neutron({
 
   return (
     <div
-      className="aspect-square rounded-full bg-slate-700 size-3 p-[0.16rem] absolute animate-translate"
+      className="aspect-square rounded-full bg-slate-700 size-3 p-0.5 absolute animate-translate"
       style={
         {
           top: startCoords.y,

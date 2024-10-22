@@ -112,7 +112,7 @@ export function Atom({
         }
 
         if (neutronsInAtom.length > 0) {
-          setWater((prev) => Math.min(prev + 3 * neutronsInAtom.length));
+          setWater((prev) => prev + 3 * neutronsInAtom.length);
         } else if (Math.random() > 0.45) {
           setWater((prev) => Math.max(prev - 1, 0));
         }
@@ -126,7 +126,7 @@ export function Atom({
 
   return (
     <div
-      className={cn("aspect-square size-8 p-1 transition-all")}
+      className="aspect-square size-8 p-1 transition-all"
       style={{
         backgroundColor: blendWater(water),
       }}
@@ -134,7 +134,7 @@ export function Atom({
       <div
         ref={atomRef}
         className={cn(
-          "aspect-square rounded-full z-10",
+          "aspect-square rounded-full",
           element === "U" && "bg-blue-500",
           element === "Xe" && "bg-slate-700",
           element === "?" && "bg-slate-400"

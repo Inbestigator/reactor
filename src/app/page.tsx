@@ -39,6 +39,30 @@ export default function Main() {
           type={v.type}
         />
       ))}
+      <div className="flex items-center gap-4 p-2">
+        <div className="text-xl font-bold text-black flex items-center">
+          <div className="aspect-square size-8 transition-all bg-blue-200 inline-block mr-2" />
+          Water
+        </div>
+        <div className="text-xl font-bold text-black flex items-center">
+          <div className="aspect-square rounded-full size-6 bg-blue-500 inline-block mr-2" />
+          Uranium
+        </div>
+        <div className="text-xl font-bold text-black flex items-center">
+          <div className="aspect-square rounded-full size-6 bg-slate-700 inline-block mr-2" />
+          Xenon
+        </div>
+        <div className="text-xl font-bold text-black flex items-center">
+          <div className="aspect-square rounded-full size-6 bg-slate-400 inline-block mr-2" />
+          Non-Uranium
+        </div>
+        <div className="text-xl font-bold text-black flex items-center">
+          <div className="aspect-square rounded-full bg-slate-700 size-3 p-0.5 inline-block mr-2">
+            <div className="aspect-square rounded-full bg-white" />
+          </div>
+          Fast Neutron
+        </div>
+      </div>
     </main>
   );
 }
