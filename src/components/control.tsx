@@ -67,7 +67,7 @@ export function Control({
   return (
     <div
       ref={modRef}
-      className="bg-slate-700 w-2.5"
+      className="bg-slate-700 w-2.5 transition-all duration-[5000ms] ease-in-out"
       style={{ height: 100 - raised + "%" }}
     />
   );
