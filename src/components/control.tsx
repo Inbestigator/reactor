@@ -69,10 +69,10 @@ export function Control({
     <div
       ref={modRef}
       className="bg-slate-700 w-2.5 transition-[height] duration-[5000ms] ease-in-out relative"
-      style={{ height: 100 - raised + "%" }}
+      style={{ height: 105 - raised + "%" }}
     >
-      <div className="bg-slate-700 w-0.5 h-32 absolute top-full left-1/2 -translate-x-1/2" />
-      <div className="absolute top-full mt-32 h-80 left-1/2 -translate-x-1/2">
+      <div className="bg-slate-700 w-0.5 h-40 absolute top-full left-1/2 -translate-x-1/2" />
+      <div className="absolute top-full mt-40 h-96 left-1/2 -translate-x-1/2">
         <Moderator neutrons={neutrons} setNeutrons={setNeutrons} />
       </div>
     </div>

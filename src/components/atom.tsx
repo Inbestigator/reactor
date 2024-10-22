@@ -151,7 +151,7 @@ export function Atom({
 
       switch (element) {
         case "?":
-          if (Math.random() > 0.995 || (water >= 100 && Math.random() > 0.99)) {
+          if (Math.random() > 0.999 || (water >= 100 && Math.random() > 0.99)) {
             setElement("U");
           }
           break;
@@ -164,7 +164,7 @@ export function Atom({
       }
 
       if (neutronsInAtom.length > 0) {
-        setWater((prev) => prev + 5 * neutronsInAtom.length);
+        setWater((prev) => prev + 3 * neutronsInAtom.length);
       } else if (Math.random() > 0.45) {
         setWater((prev) => Math.max(prev - 1, 0));
       }
