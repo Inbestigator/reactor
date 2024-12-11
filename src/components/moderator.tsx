@@ -74,7 +74,7 @@ export function Moderator({
           return amIHit;
         });
       }
-    }, 10);
+    }, 15);
 
     return () => {
       clearInterval(interval);

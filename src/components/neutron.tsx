@@ -21,10 +21,9 @@ export function Neutron({
   useEffect(() => {
     const timeout = setTimeout(() => {
       kill();
-    }, 1500);
+    }, 2500);
 
     return () => clearTimeout(timeout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

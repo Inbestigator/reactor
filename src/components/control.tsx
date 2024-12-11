@@ -58,7 +58,7 @@ export function Control({
           return amIHit;
         });
       }
-    }, 10);
+    }, 15);
 
     return () => {
       clearInterval(interval);
